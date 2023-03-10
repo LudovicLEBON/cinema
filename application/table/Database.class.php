@@ -11,53 +11,116 @@ class Database
     }
 
     static public function dataset()
-    {        
-        $message="";
+    {
+        $message = "";
 
-        $nbu = 9;
-        $o=new Utilisateur();
-        $row=[];
-        $row["uti_id"]=0;
-        for($i=0; $i<$nbu; $i++) {
-            $row["uti_nom"]="nom$i";
-            $row["uti_prenom"]="prenom$i";
-            $row["uti_email"]="email$i@user";
-            $row["uti_mdp"]=password_hash("mdp",PASSWORD_DEFAULT);
-            $row["uti_profil"]="client";
-            $o->save($row);
+        //génération des Villes
+        $_ville = ["Paris", "Marseille", "Lyon", "Toulouse", "Nice", "Nantes", "Montpellier", "Strasbourg", "Bordeaux", "Lille", "Rennes", "Reims", "Préfecture", "Saint-Étienne", "Le Havre", "Grenoble", "Dijon", "Angers", "Saint-Denis", "Villeurbanne", "Nîmes", "Clermont-Ferrand", "Aix-en-Provence", "Le Mans", "Brest", "Tours", "Amiens", "Limoges", "AnnecyNote", "Boulogne-Billancourt", "Perpignan", "Metz", "Besançon", "Orléans", "Saint-Denis", "Rouen", "Montreuil", "Argenteuil", "Mulhousee", "Caen", "Nancy", "Saint-Paul", "Roubaix", "Tourcoing", "Nanterre", "Vitry-sur-Seine", "Nouméa11", "Créteil", "Avignon", "Poitiers", "Aubervilliers"];
+
+        $nbv = count($_ville);
+        $tab = [];
+        foreach ($_ville as $nom) {
+            $tab[] = "(null,'$nom')";
         }
+        $sql = "insert into ville values " . implode(",", $tab);
+        mysqli_query(Table::$link, $sql);
+        $message .= "<p>génération de $nbv ville</p>";
 
-        $row["uti_nom"]="admin";
-        $row["uti_prenom"]="admin";
-        $row["uti_email"]="admin@user";
-        $row["uti_mdp"]=password_hash("mdp",PASSWORD_DEFAULT);
-        $row["uti_profil"]="admin";
-        $o->save($row);
-
-        $message .= "<p>Génération de $nbu utilisateurs + 1 admin</p>";    
-
-        $o = new Voyage();
-        $nbv=50;
-        $row = [];
-        $row["voy_id"] = 0;
+        //génération des cinema : 2 par ville
+        $nbc = 2;
+        $tab = [];
         for ($i = 1; $i <= $nbv; $i++) {
-            $ts=mktime(mt_rand(0,23),0,0,mt_rand(1,12),mt_rand(1,31),2022);
-            $row["voy_debut"]=date("Y-m-d H:i:s",$ts);
-            $row["voy_fin"]=date("Y-m-d H:i:s",$ts+mt_rand(3,10)*24*60*60);
-            $row["voy_pays"]=mt_rand(1,241);
-            $row["voy_prix"]=mt_rand(300,3500);
-            $o->save($row);
+            for ($j = 1; $j <= $nbc; $j++) {
+                $tab[] = "(null,'cinema $j-v$i','$i')";
+            }
         }
-        $message .= "<p>Génération des voyages</p>";
+        $sql = "insert into cinema values " . implode(",", $tab);
+        mysqli_query(Table::$link, $sql);
+        $message .= "<p>génération de $nbc cinema par ville</p>";
 
-        $c=new Commande();
-        $row["com_id"]=0;
-        for($i=1; $i<=$nbu;$i++) {
-            $row["com_utilisateur"]=$i;
-            $row["com_voyage"]=mt_rand(1,$nbv);
-            $row["com_quantite"]=mt_rand(1,4);
-            $c->save($row);
+        //génération des matchs et des films: 10 films par semaine (total=500)
+        $nbf = 0;
+        $nbfmax = 500;
+        $sem = 1;
+        $tab = [];
+        $date_sortie = [];
+        for ($i = 1; $i <= 51; $i++) {
+            for ($j = 1; $j <= 10; $j++) {
+                $nbf++;
+                $d = date("Y-m-d", mktime(0, 0, 0, 1, 1 * $sem, 2022));
+                $date_sortie[] = mktime(0, 0, 0, 1, 1 * $sem, 2022);
+                $y = $i + $j;
+                $tab[] = "(null,'film $nbf','$d','Affiche $nbf')";
+            };
+            $sem = $sem + 7;
         }
+        $sql = "insert into film values " . implode(",", $tab);
+        mysqli_query(Table::$link, $sql);
+        $message .= "<p>génération de $nbfmax film avec une fréquance de $nbf par semaine</p>";
+
+        //génération des intervenats : 1000 intervenant
+        $nbi = 1000;
+        $tab = [];
+        for ($i = 1; $i <= $nbi; $i++) {
+            $tab[] = "(null,'Nom $i','Prenom $i')";
+        }
+        $sql = "insert into intervenant values " . implode(",", $tab);
+        mysqli_query(Table::$link, $sql);
+        $message .= "<p>génération de $nbi intervenants</p>";
+
+        //génération des productions : 1 film est produit par 1 à 3 producteurs
+
+        $tab = [];
+        for ($i = 1; $i <= $nbfmax; $i++) {
+            $nbprod = mt_rand(1, 10) < 2 ? 2 : 1;
+            $t = range(1, 1000);
+            shuffle($t);
+            for ($j = 1; $j <= $nbprod; $j++) {
+
+                $tab[] = "(null,'$t[$j]','$i')";
+            }
+        }
+        $sql = "insert into produire values " . implode(",", $tab);
+        mysqli_query(Table::$link, $sql);
+        $message .= "<p>génération des producteurs des films/p>";
+
+        //génération des participants : 1 film à 1 à 30 participants
+
+        $tab = [];
+        for ($i = 1; $i <= $nbfmax; $i++) {
+            $nbpart = mt_rand(1, 30);
+            $t = range(1, 1000);
+            shuffle($t);
+            for ($j = 1; $j <= $nbpart; $j++) {
+
+                $tab[] = "(null,'$t[$j]','$i')";
+            }
+        }
+        $sql = "insert into participer values " . implode(",", $tab);
+        mysqli_query(Table::$link, $sql);
+        $message .= "<p>génération des participant aux film</p>";
+        $c = $date_sortie[1];
+        $c2 = $date_sortie[1] + 1;
+        $message .= "<pre>";
+        print_r($c);
+        print_r($c2);
+        $message .= "</pre>";
+        //grénaration des diffusions; 1 film est diffusé dans un cinéma pandant 4 semaine et dans 1 à 10 cinéma
+        $tab = [];
+        for ($i = 1; $i <= $nbfmax; $i++) {
+            $nbcin = mt_rand(1, 40);
+            $t = range(1, 100);
+            shuffle($t);
+            for ($j = 1; $j <= $nbcin; $j++) {
+                $tmp = 60 * 60 * 24 * 30;
+                $date1 = date("Y-m-d", $date_sortie[$i]);
+                $date2 = date("Y-m-d", $date_sortie[$i] + $tmp);
+                $tab[] = "(null,'$date1','$date2','$i','$t[$j]')";
+            }
+        }
+        $sql = "insert into diffuser values " . implode(",", $tab);
+        mysqli_query(Table::$link, $sql);
+        $message .= "<p>génération de 500 séance de cinéma</p>";
 
         $message .= "<p>Génération des commandes</p>";
 
