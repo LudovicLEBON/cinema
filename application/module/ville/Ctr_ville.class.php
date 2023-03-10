@@ -3,16 +3,16 @@
 Controleur créé par le générateur.
 Controleur associé à une table (implémente le CRUD)
 */
-class Ctr_[nomTable] extends Ctr_controleur implements I_crud {
+class Ctr_ville extends Ctr_controleur implements I_crud {
 
     public function __construct($action) {
-        parent::__construct("[nomTable]", $action);        
+        parent::__construct("ville", $action);        
         $a = "a_$action";
         $this->$a();
     }
 
 	function a_index() {
-		$u=new [nomClasse]();
+		$u=new Ville();
 		$data=$u->selectAll();
 		require $this->gabarit;
 	}
@@ -20,7 +20,7 @@ class Ctr_[nomTable] extends Ctr_controleur implements I_crud {
 	//$_GET["id"] : id de l'enregistrement
 	function a_edit() {		
 		$id = isset($_GET["id"]) ? $_GET["id"] : 0;
-		$u=new [nomClasse]();
+		$u=new Ville();
 		if ($id>0)
 			$row=$u->select($id);
 		else
@@ -33,14 +33,14 @@ class Ctr_[nomTable] extends Ctr_controleur implements I_crud {
 	//$_POST
 	function a_save() {
 		if (isset($_POST["btSubmit"])) {
-			$u=new [nomClasse]();
+			$u=new Ville();
 			$u->save($_POST);
-			if ($_POST["[nomCle]"]==0)
-				$_SESSION["message"][]="Le nouvel enregistrement [nomClasse] a bien été créé.";
+			if ($_POST["vil_id"]==0)
+				$_SESSION["message"][]="Le nouvel enregistrement Ville a bien été créé.";
 			else
-				$_SESSION["message"][]="L'enregistrement [nomClasse] a bien été mis à jour.";
+				$_SESSION["message"][]="L'enregistrement Ville a bien été mis à jour.";
 		}
-		header("location:" . hlien("[nomTable]"));
+		header("location:" . hlien("ville"));
 	}
 
 	
@@ -48,12 +48,10 @@ class Ctr_[nomTable] extends Ctr_controleur implements I_crud {
 	//param GET id 
 	function a_delete() {
 		if (isset($_GET["id"])) {
-			$u=new [nomClasse]();
+			$u=new Ville();
 			$u->delete($_GET["id"]);
-			$_SESSION["message"][]="L'enregistrement [nomClasse] a bien été supprimé.";
+			$_SESSION["message"][]="L'enregistrement Ville a bien été supprimé.";
 		}
-		header("location:" . hlien("[nomTable]"));
+		header("location:" . hlien("ville"));
 	}
 }
-
-?>

@@ -23,7 +23,7 @@ class Database
             $tab[] = "(null,'$nom')";
         }
         $sql = "insert into ville values " . implode(",", $tab);
-        mysqli_query(Table::$link, $sql);
+        $result = Table::$link->query($sql);
         $message .= "<p>génération de $nbv ville</p>";
 
         //génération des cinema : 2 par ville
@@ -35,7 +35,7 @@ class Database
             }
         }
         $sql = "insert into cinema values " . implode(",", $tab);
-        mysqli_query(Table::$link, $sql);
+        $result = Table::$link->query($sql);
         $message .= "<p>génération de $nbc cinema par ville</p>";
 
         //génération des matchs et des films: 10 films par semaine (total=500)
@@ -55,7 +55,7 @@ class Database
             $sem = $sem + 7;
         }
         $sql = "insert into film values " . implode(",", $tab);
-        mysqli_query(Table::$link, $sql);
+        $result = Table::$link->query($sql);
         $message .= "<p>génération de $nbfmax film avec une fréquance de $nbf par semaine</p>";
 
         //génération des intervenats : 1000 intervenant
@@ -65,7 +65,7 @@ class Database
             $tab[] = "(null,'Nom $i','Prenom $i')";
         }
         $sql = "insert into intervenant values " . implode(",", $tab);
-        mysqli_query(Table::$link, $sql);
+        $result = Table::$link->query($sql);
         $message .= "<p>génération de $nbi intervenants</p>";
 
         //génération des productions : 1 film est produit par 1 à 3 producteurs
@@ -81,7 +81,7 @@ class Database
             }
         }
         $sql = "insert into produire values " . implode(",", $tab);
-        mysqli_query(Table::$link, $sql);
+        $result = Table::$link->query($sql);
         $message .= "<p>génération des producteurs des films/p>";
 
         //génération des participants : 1 film à 1 à 30 participants
@@ -97,7 +97,7 @@ class Database
             }
         }
         $sql = "insert into participer values " . implode(",", $tab);
-        mysqli_query(Table::$link, $sql);
+        $result = Table::$link->query($sql);
         $message .= "<p>génération des participant aux film</p>";
         $c = $date_sortie[1];
         $c2 = $date_sortie[1] + 1;
@@ -119,7 +119,7 @@ class Database
             }
         }
         $sql = "insert into diffuser values " . implode(",", $tab);
-        mysqli_query(Table::$link, $sql);
+        $result = Table::$link->query($sql);
         $message .= "<p>génération de 500 séance de cinéma</p>";
 
         $message .= "<p>Génération des commandes</p>";
