@@ -1,0 +1,110 @@
+On souhaite développer un site de cinéma qui doit permettre à un utilisateur de :
+- rechercher un film,
+- afficher le titre du film, sa date de sortie, son affiche,
+- donner le ou les réalisateurs du film,
+- donner le casting du film (la liste des acteurs),
+- afficher la liste des cinémas qui projètent ce film actuellement.
+
+L'utilisateur doit aussi pouvoir :
+- rechercher une salle de cinéma par ville,
+- afficher la liste des films actuellement projetés dans ce cinéma,
+- rechercher un acteur et afficher la liste de ses films.
+- rechercher un réalisateur et afficher la liste de ses films.
+
+A noter qu'un acteur peut être aussi réalisateur.
+
+dictionnaire des informations
+un film à un titre,une date de sortie et une affiche
+un film appartier à un ou plusieur réalisateur
+un film fait jouer une liste de pluseiur acteurs
+un film est diffuser dans un ou plusieurs cinéma
+un cinéma est situer dans une ou plusieur ville 
+
+<MCD>
+<entité>
+film
+- id (AI)
+- titre varchar(100)
+- date de sortie date
+- afficher image
+
+intervenant
+- id (AI)
+- nom varchar(50)
+- prenom varchar (50)
+
+cinema
+- id (AI)
+- libelle varchar(100)
+
+ville
+- id (AI)
+- nom varchar(50)
+</entité>
+
+<association>
+produire
+- film 1,n
+- intervenant 1,n
+
+participer à
+- film 1,n
+- intervenant 1,n
+
+diffuser (date début de projection,date de fin de projection)
+- film 1,n
+- cinema 1,n
+
+situer
+- ville 1,n
+- cinema 1,1
+
+</association>
+</MCD>
+
+<MLD>
+film
+- id (PK)
+- titre varchar(100)
+- date de sortie date
+- afficher image
+
+intervenant
+- id (PK)
+- nom varchar(50)
+- prenom varchar (50)
+
+cinema
+- id (PK)
+- libelle varchar(100)
+- ville (FK)
+
+ville
+- id (PK)
+- nom varchar(100)
+
+produire
+- id (PK)
+- intervenant (FK)
+- film (FK)
+
+participer
+- id (PK)
+- intervenant (FK)
+- film (FK)
+
+diffuser 
+- id (PK)
+- date_apparition
+- date_disparition
+- film (FK)
+- cinema (FK)
+</MLD>
+
+<MCDgra>
+produire: film 1,N; intervenant 1,N
+participer: film 1,N; intervenant 1,N
+diffuser :film 1,N; cinema 1,N
+situer: ville 1,N; cinema 1,1
+</MCDgra>
+
