@@ -8,12 +8,12 @@ setlocale(LC_TIME, 'fr-FR.UTF8', 'fra');
 date_default_timezone_set('Europe/Paris');
 
 /** Les constantes **/
-define("SITE_NOM", "Agence");
+define("SITE_NOM", "Cinéma");
 define("DB_SERVER", "localhost");
 define("DB_PORT", "3306");
 define("DB_USER", "root");
 define("DB_PWD", "");
-define("DB_BDD", "agence");
+define("DB_BDD", "cinema");
 
 //Les champs des tables sont préfixés par les X premiers caracteres du nom de la table. Généralement X=3
 define("DB_PREFIXE_LENGTH", 3);
