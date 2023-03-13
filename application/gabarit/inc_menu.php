@@ -6,15 +6,15 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="index.php">Home</span></a>
+          <a class="nav-link active" aria-current="page" href="index.php">Accueil</span></a>
         </li>
-        <li><a class='nav-link' href='<?=hlien("cinema","index")?>'>Cinema</a></li>
-<li><a class='nav-link' href='<?=hlien("diffuser","index")?>'>Diffuser</a></li>
-<li><a class='nav-link' href='<?=hlien("film","index")?>'>Film</a></li>
-<li><a class='nav-link' href='<?=hlien("intervenant","index")?>'>Intervenant</a></li>
-<li><a class='nav-link' href='<?=hlien("participer","index")?>'>Participer</a></li>
-<li><a class='nav-link' href='<?=hlien("produire","index")?>'>Produire</a></li>
-<li><a class='nav-link' href='<?=hlien("ville","index")?>'>Ville</a></li>
+        <li><a class='nav-link' href='<?= hlien("cinema", "index") ?>'>Cinema</a></li>
+        <li><a class='nav-link' href='<?= hlien("diffuser", "index") ?>'>Diffuser</a></li>
+        <li><a class='nav-link' href='<?= hlien("film", "index") ?>'>Film</a></li>
+        <li><a class='nav-link' href='<?= hlien("intervenant", "index") ?>'>Intervenant</a></li>
+        <li><a class='nav-link' href='<?= hlien("participer", "index") ?>'>Participer</a></li>
+        <li><a class='nav-link' href='<?= hlien("produire", "index") ?>'>Produire</a></li>
+        <li><a class='nav-link' href='<?= hlien("ville", "index") ?>'>Ville</a></li>
 
       </ul>
       <ul class="navbar-nav ml-auto">
