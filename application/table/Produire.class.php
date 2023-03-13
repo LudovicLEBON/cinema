@@ -20,7 +20,7 @@ class Produire extends Table
 
 	static function selectIndividuByProducteur(int $id): array
 	{
-		$sql = "select * from intervenant,produire,film where int_id=pro_intervenant and pro_film=:id";
+		$sql = "select * from intervenant,produire,film where int_id=pro_intervenant and pro_film=fil_id and pro_film=:id";
 		$statement = self::$link->prepare($sql);
 		$statement->bindValue(":id", $id, PDO::PARAM_INT);
 

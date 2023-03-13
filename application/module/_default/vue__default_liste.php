@@ -34,7 +34,7 @@
                         <td> <?= mhe($row['fil_affiche']) ?><br /> <?= mhe($row['fil_titre']) ?> </td>
                         <td> <?= mhe($row['nbjour']) ?> jours </td>
                         <td>
-                            <a class="btn btn-warning" href="<?= hlien("film", "details", "id", $row["fil_id"]) ?>"> Détails </a>
+                            <a class="btn btn-info" href="<?= hlien("film", "details", "id", $row["fil_id"]) ?>"> Détails </a>
                         </td>
 
                     </tr>

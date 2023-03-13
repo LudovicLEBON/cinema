@@ -20,7 +20,7 @@ class Participer extends Table
 
 	static function selectIndividuByActeur(int $id,): array
 	{
-		$sql = "select * from intervenant,participer,film where int_id=par_intervenant and par_film=:id";
+		$sql = "select * from intervenant,participer,film where int_id=par_intervenant and par_film=fil_id and par_film=:id";
 		$statement = self::$link->prepare($sql);
 		$statement->bindValue(":id", $id, PDO::PARAM_INT);
 
